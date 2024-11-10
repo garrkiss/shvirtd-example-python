@@ -6,19 +6,18 @@ include:
 services:
   web:
     build:
-      context: .
       dockerfile: Dockerfile.python 
     networks:
       backend:
         ipv4_address: 172.20.0.5
     restart: on-failure
+    env_file:
+      - .env
     environment:
       MYSQL_HOST: db
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-#    ports:
-#      - "8090:5000" 
     depends_on:
       - db
   
@@ -30,6 +29,8 @@ services:
       backend:
         ipv4_address: 172.20.0.10
     restart: on-failure
+    env_file:
+      - .env
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
